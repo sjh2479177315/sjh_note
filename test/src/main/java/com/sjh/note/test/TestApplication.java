@@ -2,6 +2,7 @@ package com.sjh.note.test;
 
 import com.sjh.note.test.config.BeanTestConfig;
 import com.sjh.note.test.entity.User;
+import org.springframework.beans.factory.BeanFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -28,6 +29,11 @@ public class TestApplication {
         String[] beanDefinitionNames = context.getBeanDefinitionNames();
         Arrays.stream(beanDefinitionNames).forEach(System.out::println);
 
+//        Object country = context.getBean("myFactoryBean");
+//        System.out.println(country.getClass());
+//
+//        Object myFactoryBean = context.getBean("&myFactoryBean");
+//        System.out.println(myFactoryBean.getClass());
 
     }
 

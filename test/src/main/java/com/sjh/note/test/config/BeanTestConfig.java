@@ -18,12 +18,19 @@ import org.springframework.stereotype.Controller;
 //@ComponentScan(value = "com.sjh.note.test.entity", includeFilters = {@ComponentScan.Filter(type = FilterType.ANNOTATION, classes = {Controller.class})}, useDefaultFilters = false)
 @ComponentScan("com.sjh.note.test.entity")
 //@Configuration
-@Import({School.class})
+//@Import({School.class})
+//@Import(MyImportSelector.class)
+@Import(MyImportBeanRegistrar.class)
 public class BeanTestConfig {
 
     //@Bean
     public User user() {
         System.out.println("往ioc容器中注册user bean");
         return new User("test", 20);
+    }
+
+    @Bean
+    public MyFactoryBean myFactoryBean() {
+        return new MyFactoryBean();
     }
 }

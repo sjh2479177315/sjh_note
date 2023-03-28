@@ -20,4 +20,12 @@
 
     session：同一个session对应一个实例。
 4、懒加载@Lazy：容器创建前，bean就会已经被注册到ioc里，如果我们不希望这么早注入，那就使用@Lazy，在我们使用指定bean时，才会注入到ioc中
-5、导入组件@Import：
+5、导入组件
+    5.1、@Import：导入单个bean到容器中，相当于使用@Bean，但是@Import导入的Bean的默认名称是全类名（com.sjh.note.test.entity.School）
+    5.2、ImportSelector:导入多个bean到容器中，需要自行实现org.springframework.context.annotation.ImportSelector接口
+        例：@Import(MyImportSelector.class)，MyImportSelector是自定义的实现了ImportSelector接口的类
+    5.3、ImportBeanDefinitionRegistrar：需要自行实现org.springframework.context.annotation.ImportBeanDefinitionRegistrar接口
+        例：@Import(MyImportBeanRegistrar.class)；MyImportBeanRegistrar是自定义的实现了ImportBeanDefinitionRegistrar接口的类，然后利用BeanDefinitionRegistry来注册一个bean
+6、FactoryBean注册组件
+    FactoryBean是一个范型接口，我们需要自定义类实现它，范型就是我们需要注册的Bean类型，里面的getObject方法就是返回Bean的方法，然后就可以使用@Bean来注入FactoryBean从而达到注册范型的Bean
+    详见：MyFactoryBean类
