@@ -1,0 +1,23 @@
+学习文档：https://mrbird.cc/Spring-Bean-Regist.html
+
+1、通过@Bean注册组件：bean的名字默认是方法名，也可以自定义
+2、使用@ComponentScan扫描组件：不可以包含启动类，可以配置多条，可以过滤，可以自定义过滤，自定义过滤需要实现接口org.springframework.core.type.filter.TypeFilter
+    // 过滤带注解@Controller的类，这些类不会被注入到ioc容器中
+    //@ComponentScan(value = "com.sjh.note.test.entity", excludeFilters = {@ComponentScan.Filter(type = FilterType.ANNOTATION, classes = {Controller.class})})
+    // 过滤User，这个类不会被注入ioc容器中
+    //@ComponentScan(value = "com.sjh.note.test.entity", excludeFilters = {@ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = {User.class})})
+    // 过滤带注解@Controller的类，这些类才会被注入到ioc容器中
+    //@ComponentScan(value = "com.sjh.note.test.entity", includeFilters = {@ComponentScan.Filter(type = FilterType.ANNOTATION, classes = {Controller.class})}, useDefaultFilters = false)
+    @ComponentScan("com.sjh.note.test.entity")
+    FilterType.ANNOTATION：注解
+    FilterType.ASSIGNABLE_TYPE：指定类
+3、组件作用域@Scope：
+    singleton：单实例（默认）,在Spring IOC容器启动的时候会调用方法创建对象然后纳入到IOC容器中，以后每次获取都是直接从IOC容器中获取（map.get()）；
+
+    prototype：多实例，IOC容器启动的时候并不会去创建对象，而是在每次获取的时候才会去调用方法创建对象；
+
+    request：一个请求对应一个实例；
+
+    session：同一个session对应一个实例。
+4、懒加载@Lazy：容器创建前，bean就会已经被注册到ioc里，如果我们不希望这么早注入，那就使用@Lazy，在我们使用指定bean时，才会注入到ioc中
+5、导入组件@Import：
