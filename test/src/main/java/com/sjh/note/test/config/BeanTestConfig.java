@@ -1,5 +1,7 @@
 package com.sjh.note.test.config;
 
+import com.sjh.note.test.entity.App;
+import com.sjh.note.test.entity.Bird;
 import com.sjh.note.test.entity.School;
 import com.sjh.note.test.entity.User;
 import org.springframework.context.annotation.Bean;
@@ -16,21 +18,34 @@ import org.springframework.stereotype.Controller;
 //@ComponentScan(value = "com.sjh.note.test.entity", excludeFilters = {@ComponentScan.Filter(type = FilterType.ANNOTATION, classes = {Controller.class})})
 //@ComponentScan(value = "com.sjh.note.test.entity", excludeFilters = {@ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = {User.class})})
 //@ComponentScan(value = "com.sjh.note.test.entity", includeFilters = {@ComponentScan.Filter(type = FilterType.ANNOTATION, classes = {Controller.class})}, useDefaultFilters = false)
-@ComponentScan("com.sjh.note.test.entity")
+@ComponentScan(value = "com.sjh.note.test.entity", includeFilters = {@ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = {Bird.class})}, useDefaultFilters = false)
+@ComponentScan("com.sjh.note.test.config")
 //@Configuration
 //@Import({School.class})
 //@Import(MyImportSelector.class)
-@Import(MyImportBeanRegistrar.class)
+//@Import(MyImportBeanRegistrar.class)
+@Import(Bird.class)
 public class BeanTestConfig {
 
     //@Bean
-    public User user() {
-        System.out.println("往ioc容器中注册user bean");
-        return new User("test", 20);
-    }
+//    public User user() {
+//        System.out.println("往ioc容器中注册user bean");
+//        return new User("test", 20);
+//    }
 
-    @Bean
-    public MyFactoryBean myFactoryBean() {
-        return new MyFactoryBean();
-    }
+//    @Bean(initMethod = "init", destroyMethod = "destroy")
+//    public App app() {
+//        System.out.println("往容器中注册 app bean");
+//        return new App();
+//    }
+
+//    @Bean
+//    public MyBeanPostProcessor myBeanPostProcessor() {
+//        return new MyBeanPostProcessor();
+//    }
+
+//    @Bean
+//    public MyFactoryBean myFactoryBean() {
+//        return new MyFactoryBean();
+//    }
 }

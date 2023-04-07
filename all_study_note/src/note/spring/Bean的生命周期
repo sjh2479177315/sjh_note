@@ -1,0 +1,24 @@
+bean的生命周期简单来说有：初始化，销毁
+1、使用@Bean
+    例：@Bean(initMethod = "init", destroyMethod = "destroy")，在对应的被注入的对象中，需要创建初始化方法init，销毁方法destroy
+    可参考App类
+2、使用接口InitializingBean, DisposableBean
+    需要重写方法：destroy()销毁，afterPropertiesSet()初始化；
+3、使用@PostConstruct&@PreDestroy
+    @PostConstruct：放在被注入对象的初始化方法上
+    @PreDestroy：放在被注入对象的销毁方法上
+4、BeanPostProcessor Bean后置处理器，类似于bean初始化的代理，会在bean初始化之前和之后调用，用于在Bean初始化前后插入我们自己的逻辑（Bean增强，Bean代理等）
+    例：MyBeanPostProcessor类实现了BeanPostProcessor接口，自定义重写了方法postProcessBeforeInitialization(初始化前调用)，postProcessAfterInitialization(初始化后调用)
+5、InstantiationAwareBeanPostProcessor （是BeanPostProcessor的子类），类似于bean无参构造器的代理
+    例：MyInstantiationAwareBeanPostProcessor类实现了InstantiationAwareBeanPostProcessor
+6、BeanPostProcessor和InstantiationAwareBeanPostProcessor联合使用的执行顺序如下：
+    1、postProcessBeforeInstantiation （实例化之前调用） InstantiationAwareBeanPostProcessor
+    2、调用bean的无参构造器 （new 了个bean）
+    3、postProcessAfterInstantiation （实例化之后调用） InstantiationAwareBeanPostProcessor
+    4、postProcessProperties （实例化后的属性赋值）InstantiationAwareBeanPostProcessor
+    5、postProcessBeforeInitialization （初始化之前调用）BeanPostProcessor
+    6、afterPropertiesSet  （bean的初始化方法）  InitializingBean
+    7、postProcessAfterInitialization （初始化之后调用） postProcessAfterInitialization
+7、postProcessAfterInitialization和InstantiationAwareBeanPostProcessor的方法都和Bean生命周期有关，
+    要分析它们的实现原理自然要从Bean的创建过程入手。Bean创建的入口为AbstractAutowireCapableBeanFactory的createBean方法
+    核心方法：createBean

@@ -35,6 +35,9 @@ public class TestApplication {
 //        Object myFactoryBean = context.getBean("&myFactoryBean");
 //        System.out.println(myFactoryBean.getClass());
 
+        // 关闭容器
+        context.close();
+
     }
 
 }
